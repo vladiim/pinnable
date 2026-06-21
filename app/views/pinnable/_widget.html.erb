@@ -1,0 +1,56 @@
+<div
+  class="pinnable"
+  data-controller="pinnable"
+  data-pinnable-pins-url-value="<%= pinnable.pins_path %>"
+  data-pinnable-markers-url-value="<%= pinnable.markers_path %>"
+  data-pinnable-current-url-value="<%= request.path %>"
+  data-pinnable-focus-value="<%= params[:pinnable] %>"
+  data-pinnable-csrf-value="<%= form_authenticity_token %>"
+>
+  <button
+    type="button"
+    class="pinnable-toggle"
+    data-pinnable-target="toggle"
+    data-action="pinnable#toggle"
+  >💬 Comments: Off</button>
+</div>
+
+<%= javascript_import_module_tag "pinnable" %>
+
+<style>
+  .pinnable-toggle {
+    position: fixed; right: 16px; bottom: 16px; z-index: 2147483000;
+    padding: 8px 14px; border: 0; border-radius: 999px; cursor: pointer;
+    background: #1f2937; color: #fff; font: 500 13px system-ui, sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  }
+  .pinnable-toggle--on { background: #6366f1; }
+  .pinnable-composer {
+    position: absolute; z-index: 2147483001; width: 240px; padding: 10px;
+    background: #fff; border: 1px solid #d1d5db; border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.18); font: 13px system-ui, sans-serif;
+  }
+  .pinnable-composer__text { width: 100%; min-height: 64px; box-sizing: border-box; resize: vertical; }
+  .pinnable-composer__actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px; }
+  .pinnable-composer__actions button { cursor: pointer; padding: 4px 10px; border-radius: 6px; border: 1px solid #d1d5db; background: #f9fafb; }
+  .pinnable-composer__save { background: #6366f1 !important; color: #fff; border-color: #6366f1 !important; }
+  .pinnable-marker {
+    position: absolute; z-index: 2147483000; transform: translate(-50%, -50%);
+    width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%;
+    background: #6366f1; color: #fff; font-size: 12px; line-height: 22px; cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+  }
+  .pinnable-marker--flash { outline: 3px solid #f59e0b; outline-offset: 2px; }
+  .pinnable-pop {
+    position: absolute; z-index: 2147483001; width: 220px; padding: 10px;
+    background: #fff; border: 1px solid #d1d5db; border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.18); font: 13px system-ui, sans-serif;
+  }
+  .pinnable-pop__resolve { cursor: pointer; margin-top: 8px; padding: 4px 10px; border-radius: 6px; border: 1px solid #6366f1; background: #6366f1; color: #fff; }
+  .pinnable-tray {
+    position: fixed; left: 16px; bottom: 16px; z-index: 2147483000; max-width: 260px;
+    padding: 10px; background: #fff; border: 1px solid #d1d5db; border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.2); font: 12px system-ui, sans-serif;
+  }
+  .pinnable-tray__item { display: block; width: 100%; text-align: left; cursor: pointer; margin-top: 6px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 4px 8px; }
+</style>

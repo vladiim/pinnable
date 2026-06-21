@@ -1,0 +1,21 @@
+<section class="pinnable-inbox">
+  <h1 class="pinnable-inbox__title">Feedback</h1>
+
+  <% if @pins.empty? %>
+    <p class="pinnable-inbox__empty">No feedback yet. Toggle comment mode and click an element to leave the first note.</p>
+  <% end %>
+
+  <ul class="pinnable-inbox__list">
+    <% @pins.each do |pin| %>
+      <li class="pinnable-pin pinnable-pin--<%= pin.status %>">
+        <p class="pinnable-pin__body"><%= pin.body %></p>
+        <footer class="pinnable-pin__meta">
+          <span class="pinnable-pin__author"><%= pin.author_label %></span>
+          <span class="pinnable-pin__url"><%= pin.url %></span>
+          <span class="pinnable-pin__status"><%= pin.status.humanize %></span>
+          <%= link_to "Open on page", pin_path(pin), class: "pinnable-pin__open", data: { turbo: false } %>
+        </footer>
+      </li>
+    <% end %>
+  </ul>
+</section>
