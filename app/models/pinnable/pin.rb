@@ -7,5 +7,6 @@ module Pinnable
     include Pin::Validations
     include Pin::Scopes
     include Pin::Transitions
+    include Pin::Encryption
   end
 end

@@ -9,6 +9,12 @@ Rails.application.configure do
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
+  # Deterministic, NON-SECRET keys so Active Record encryption works in the test
+  # suite (the dummy host opts into Pinnable's encrypt mode). Never use in prod.
+  config.active_record.encryption.primary_key = "test_primary_key_do_not_use_in_prod_0001"
+  config.active_record.encryption.deterministic_key = "test_deterministic_key_do_not_use_in_prod"
+  config.active_record.encryption.key_derivation_salt = "test_key_derivation_salt_do_not_use_in_prod"
+
   # Eager loading loads your entire application. When running a single test locally,
   # this is usually not necessary, and can slow down your test suite. However, it's
   # recommended that you enable it in continuous integration systems to ensure eager
