@@ -1,21 +1,63 @@
 <section class="pinnable-inbox">
-  <h1 class="pinnable-inbox__title">Feedback</h1>
+  <div class="pinnable-head">
+    <h1>Feedback<% if @pins.any? %><span class="pinnable-count"><%= @pins.size %></span><% end %></h1>
+    <p>Comments left across the app. Open one to jump back to the exact element it was pinned on.</p>
+  </div>
 
   <% if @pins.empty? %>
-    <p class="pinnable-inbox__empty">No feedback yet. Toggle comment mode and click an element to leave the first note.</p>
+    <div class="pinnable-card">
+      <div class="pinnable-empty">
+        <strong>No feedback yet</strong>
+        Toggle comment mode on any page, then click an element to leave the first note.
+      </div>
+    </div>
+  <% else %>
+    <div class="pinnable-card">
+      <table class="pinnable-table">
+        <thead>
+          <tr>
+            <th>Comment</th>
+            <th>Page</th>
+            <th>By</th>
+            <th>Status</th>
+            <th>When</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @pins.each do |pin| %>
+            <tr class="<%= "is-done" unless pin.open? %>">
+              <td class="pinnable-cell-body"><%= pin.body %></td>
+              <td class="pinnable-cell-muted"><%= pin.url %></td>
+              <td class="pinnable-cell-muted"><%= pin.author_label %></td>
+              <td><span class="pinnable-status pinnable-status--<%= pin.status %>"><%= pin.status.tr("_", " ") %></span></td>
+              <td class="pinnable-cell-muted"><%= time_ago_in_words(pin.created_at) %> ago</td>
+              <td>
+                <div class="pinnable-actions">
+                  <%= link_to "Open on page", pin_path(pin.public_id), class: "pinnable-btn" %>
+                  <% if pin.open? %>
+                    <%=
+                      button_to "Resolve", pin_path(pin.public_id),
+                        method: :patch,
+                        params: { pin: { status: "resolved" } },
+                        form_class: "pinnable-resolve",
+                        class: "pinnable-btn pinnable-btn--primary"
+                    %>
+                  <% else %>
+                    <%=
+                      button_to "Reopen", pin_path(pin.public_id),
+                        method: :patch,
+                        params: { pin: { status: "open" } },
+                        form_class: "pinnable-resolve",
+                        class: "pinnable-btn"
+                    %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% end %>
-
-  <ul class="pinnable-inbox__list">
-    <% @pins.each do |pin| %>
-      <li class="pinnable-pin pinnable-pin--<%= pin.status %>">
-        <p class="pinnable-pin__body"><%= pin.body %></p>
-        <footer class="pinnable-pin__meta">
-          <span class="pinnable-pin__author"><%= pin.author_label %></span>
-          <span class="pinnable-pin__url"><%= pin.url %></span>
-          <span class="pinnable-pin__status"><%= pin.status.humanize %></span>
-          <%= link_to "Open on page", pin_path(pin), class: "pinnable-pin__open", data: { turbo: false } %>
-        </footer>
-      </li>
-    <% end %>
-  </ul>
 </section>

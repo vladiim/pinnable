@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pinnable</title>
+  <title>Feedback · Pinnable</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-
   <%= yield :head %>
-
-  <%= stylesheet_link_tag    "pinnable/application", media: "all" %>
+  <%= stylesheet_link_tag "pinnable/application", media: "all" %>
 </head>
-<body>
+<body class="pinnable-body">
+  <header class="pinnable-topbar">
+    <span class="pinnable-topbar__dot">📌</span> Pinnable
+  </header>
 
-<%= yield %>
-
+  <main class="pinnable-wrap">
+    <% if flash[:notice] %>
+      <div class="pinnable-flash"><%= flash[:notice] %></div>
+    <% end %>
+    <%= yield %>
+  </main>
 </body>
 </html>

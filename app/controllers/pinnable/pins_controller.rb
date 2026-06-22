@@ -14,7 +14,10 @@ module Pinnable
 
     def update
       ResolvePin.new(pin:, by: pinnable_user, status: status_param).call
-      head :no_content
+      respond_to do |format|
+        format.json { head :no_content }                                  # the on-page widget
+        format.html { redirect_to pins_path, notice: "Feedback updated." } # the inbox
+      end
     end
 
     private
