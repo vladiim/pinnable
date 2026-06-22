@@ -66,6 +66,11 @@ Pinnable.configure do |c|
 end
 ```
 
+> **Turning encryption on later:** Active Record `encrypts` can't read rows written before it
+> was enabled, so an existing `pinnable_pins` table with plaintext rows will raise on read. Either
+> set `c.encrypt = true` from the start, or clear/re-encrypt existing rows before flipping it on
+> (`Pinnable::Pin.delete_all` in dev). Fresh installs are unaffected.
+
 ## How it works
 
 - **Capture.** In comment mode a capture-phase click is intercepted (so the underlying control
