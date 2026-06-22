@@ -19,6 +19,16 @@ class Pinnable::MarkersControllerTest < ActionDispatch::IntegrationTest
     assert json.first["public_id"].present?
   end
 
+  test "markers carry a pin's reply thread" do
+    pin = pin_on("/dashboard", "needs a fix")
+    pin.comments.create!(author: admin, author_label: admin.email, body: "looking now")
+
+    get MARKERS, params: { url: "/dashboard" }, headers: as(admin)
+
+    assert_equal [ "looking now" ], json.first["comments"].map { |c| c["body"] }
+    assert_equal "admin@example.com", json.first["comments"].first["author_label"]
+  end
+
   test "a user the gate rejects gets 404" do
     get MARKERS, params: { url: "/dashboard" }, headers: as(member)
     assert_response :not_found

@@ -57,6 +57,7 @@
 .pinnable-table tbody tr:first-child td { border-top: 0; }
 .pinnable-table tbody tr.is-done { opacity: .6; }
 .pinnable-cell-body { font-weight: 500; }
+.pinnable-replies { margin-left: 6px; font-size: 11px; font-weight: 600; color: var(--pin-muted); }
 .pinnable-cell-muted { color: var(--pin-muted); }
 .pinnable-actions { display: flex; gap: 8px; justify-content: flex-end; }
 

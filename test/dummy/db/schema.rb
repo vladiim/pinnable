@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_21_020706) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_22_045644) do
+  create_table "pinnable_comments", force: :cascade do |t|
+    t.string "author_id"
+    t.string "author_label"
+    t.string "author_type"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.integer "pin_id", null: false
+    t.string "public_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pin_id"], name: "index_pinnable_comments_on_pin_id"
+    t.index ["public_id"], name: "index_pinnable_comments_on_public_id", unique: true
+  end
+
   create_table "pinnable_pins", force: :cascade do |t|
     t.text "anchor"
     t.string "author_id"
@@ -41,4 +54,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_020706) do
     t.string "email"
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "pinnable_comments", "pinnable_pins", column: "pin_id"
 end

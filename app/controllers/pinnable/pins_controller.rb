@@ -1,7 +1,7 @@
 module Pinnable
   class PinsController < ApplicationController
     def index
-      @pins = pinnable_pins.recent
+      @pins = pinnable_pins.recent.includes(:comments)
     end
 
     def show

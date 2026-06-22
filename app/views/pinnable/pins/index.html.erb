@@ -27,7 +27,10 @@
         <tbody>
           <% @pins.each do |pin| %>
             <tr class="<%= "is-done" unless pin.open? %>">
-              <td class="pinnable-cell-body"><%= pin.body %></td>
+              <td class="pinnable-cell-body">
+                <%= pin.body %>
+                <% if pin.comments.any? %><span class="pinnable-replies">💬 <%= pin.comments.size %></span><% end %>
+              </td>
               <td class="pinnable-cell-muted"><%= pin.url %></td>
               <td class="pinnable-cell-muted"><%= pin.author_label %></td>
               <td><span class="pinnable-status pinnable-status--<%= pin.status %>"><%= pin.status.tr("_", " ") %></span></td>

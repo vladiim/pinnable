@@ -11,12 +11,17 @@ module Pinnable
         body: pin.body,
         status: pin.status,
         author_label: pin.author_label,
-        anchor: pin.anchor
+        anchor: pin.anchor,
+        comments: comments
       }
     end
 
     private
 
     attr_reader :pin
+
+    def comments
+      pin.comments.order(:created_at).map { |c| { author_label: c.author_label, body: c.body } }
+    end
   end
 end

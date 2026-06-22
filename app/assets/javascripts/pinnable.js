@@ -231,15 +231,52 @@ class PinnableController extends Controller {
 
   openPopover(dot, pin) {
     this.closePopover()
+    pin.comments = pin.comments || []
     const pop = document.createElement("div")
     pop.className = "pinnable-pop"
     pop.style.left = dot.style.left
     pop.style.top = `${parseFloat(dot.style.top) + 22}px`
-    pop.innerHTML = `<p class="pinnable-pop__body"></p><button type="button" class="pinnable-pop__resolve">Resolve</button>`
+    pop.innerHTML = `
+      <p class="pinnable-pop__body"></p>
+      <div class="pinnable-pop__thread"></div>
+      <form class="pinnable-pop__reply">
+        <input type="text" class="pinnable-pop__input" placeholder="Reply…">
+      </form>
+      <button type="button" class="pinnable-pop__resolve">Resolve</button>`
     pop.querySelector(".pinnable-pop__body").textContent = pin.body
     document.body.appendChild(pop)
     this.pop = pop
+    this.renderThread(pop, pin)
     pop.querySelector(".pinnable-pop__resolve").addEventListener("click", () => this.resolve(pin, dot))
+    pop.querySelector(".pinnable-pop__reply").addEventListener("submit", (e) => { e.preventDefault(); this.reply(pin, pop) })
+  }
+
+  renderThread(pop, pin) {
+    const thread = pop.querySelector(".pinnable-pop__thread")
+    thread.innerHTML = ""
+    pin.comments.forEach((c) => {
+      const row = document.createElement("div")
+      row.className = "pinnable-pop__comment"
+      const who = document.createElement("span")
+      who.className = "pinnable-pop__author"
+      who.textContent = c.author_label
+      const text = document.createElement("span")
+      text.textContent = c.body
+      row.append(who, text)
+      thread.appendChild(row)
+    })
+  }
+
+  async reply(pin, pop) {
+    const input = pop.querySelector(".pinnable-pop__input")
+    const body = input.value.trim()
+    if (!body) return
+    const res = await this.post(`${this.pinsUrlValue}/${pin.public_id}/comments`, { comment: { body } })
+    if (!res.ok) return
+    const comment = await res.json()
+    pin.comments.push({ author_label: comment.author_label, body: comment.body })
+    this.renderThread(pop, pin)
+    input.value = ""
   }
 
   closePopover() { if (this.pop) { this.pop.remove(); this.pop = null } }
