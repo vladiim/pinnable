@@ -4,7 +4,7 @@ module Pinnable
   # deliberately rather than by accident.
   class Configuration
     attr_accessor :enabled_for, :current_user, :tenant_scope, :user_label,
-      :resolver_label, :parent_controller, :encrypt, :audit, :anchor_max_bytes
+      :resolver_label, :parent_controller, :encrypt, :audit, :anchor_max_bytes, :layout
 
     def initialize
       @enabled_for       = ->(_user) { false }                 # the gate
@@ -16,6 +16,7 @@ module Pinnable
       @encrypt           = false                               # opt-in AR encryption of body/anchor
       @audit             = ->(_pin, _event, _by) {}            # optional sink
       @anchor_max_bytes  = 50_000
+      @layout            = "pinnable/application"          # host sets its own for native chrome
     end
   end
 end

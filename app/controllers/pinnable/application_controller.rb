@@ -1,6 +1,8 @@
 # Inherits the host's controller (via config) so it picks up the host's auth, CSRF, and
 # layout. Every Pinnable request is gated by the host-supplied `enabled_for` predicate.
 class Pinnable::ApplicationController < Pinnable.config.parent_controller.constantize
+  layout -> { Pinnable.config.layout }
+
   before_action :require_pinnable_enabled
 
   private
