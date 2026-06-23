@@ -155,10 +155,88 @@ Biggest risk is not "does it work" — it's **structural absorption**. A comment
 exactly what Heurio, BugHerd, or a Figma-style canvas can bolt on. Thin players here exit as
 acqui-hires (Pastel → Whatnot at ~$143k revenue), not ARR multiples.
 
-Conflict to name against your own constraints: Pinafly needs a Product Hunt launch and public
-founder-led category SEO to ignite. That's at odds with the mbuzz "can't publicly promote, bootstrap,
-focused" posture. Decide whether this gets real standalone cycles, or stays the pinnable engine sold
-into the people already building feedback tools.
+Timing: this gets its public push once Vlad is clear of the current-role constraint (the "can't
+publicly promote" limit that also gates mbuzz). At that point Pinafly and mbuzz both go public
+together. Until then, treat the work below as build-and-validate, not launch.
+
+---
+
+## Go-to-market
+
+The crux that governs all of it: the snapshot only matters where the page is **ephemeral**. On a
+stable live site the incumbents' live-render is fine and the freeze is dead weight. So Pinafly doesn't
+sell "website feedback" (saturated, doesn't win) — it sells to people whose pages disappear: the page
+they need feedback on won't exist tomorrow.
+
+### Early customers — go where pages are ephemeral
+
+Three pools with a real snapshot need, ranked:
+
+1. **Vibe-coding / AI app builders** (Lovable, v0, Bolt, Replit, Cursor). Every prompt regenerates the
+   UI, so "the third card is broken" is unsendable on a live link — the screen is gone next
+   generation. This is the crowd Heurio is already chasing and exactly where its lack of a freeze is a
+   hole. Momentum, a findable community, the timing tailwind. **This is the beachhead.**
+2. **QA on staging that redeploys.** Bug state is gone after the next deploy; the freeze is the value.
+3. **CRO / A/B teams.** Comment on the exact variant a user saw, not whatever's live now.
+
+Get the first 10–20 by hand, not by launch. Sit in the Lovable/Bolt Discords, r/lovable, the "look
+what I built" X threads; find people already sharing build links; put the capture→comment→share flow
+in front of them one at a time. Watch them use it, fix what breaks, repeat. The non-scalable Kindle
+move — prove the loop fires with real people before building the engine. Product Hunt is the ignition
+you spend *after* the loop holds, not before.
+
+### Virality — real but bounded; name it correctly
+
+One loop works, and it's bounded:
+
+```
+Input:   someone has a changing page they need eyes on
+Action:  capture -> pin comments -> @mention -> share a NO-INSTALL link
+Output:  recipient opens the frozen page + pins, replies as a guest (some new to Pinafly);
+         issues get created; the team adopts
+Loop:    some recipients later capture their own page -> new senders
+```
+
+This is the BugHerd/Markup engine. It lowers CAC; it does not self-propagate to strangers. Coefficient
+under 1 for consumers, over 1 inside a team. Model it as **land-and-expand plus word-of-mouth**, not
+"viral built in."
+
+Three things must be true or the loop dies:
+
+- **Guest view is zero-friction** — read and reply with no install, no signup. The single most
+  important product decision in the whole project. Gate it and you have a tool, not a loop.
+- **The shared artifact is worth opening.** The edge over a Loom-of-a-bug: the recipient interacts with
+  the actual frozen page, not a video.
+- **Every shared link carries light branding** ("commented with Pinafly → make your own"), the way
+  Loom and Dropbox links do.
+
+Don't bet on public snapshots as an SEO surface. Glasp documented that it draws traffic and converts
+terribly, and it adds DMCA/privacy exposure from publishing copies of other people's pages. Snapshots
+stay private; the loop is the share link, not search.
+
+### Monetization — seats, and price the permanence
+
+Consumer freemium on an extension is a dead end (200k installs → ~$2k MRR is the precedent). Money is
+per-seat B2B.
+
+- **Free** — solo capture + comment, shareable guest links, but snapshots expire (~30 days) and
+  history is capped. Free is the funnel and the viral surface, not a revenue line, so the loop stays
+  ungated.
+- **Team, ~$20–25/seat/mo** — unlimited snapshots, **permanent retention + version history**, team
+  inbox, @mentions, integrations (Slack, Linear/GitHub/Jira issue creation). 80–90% of revenue.
+- **Skip a cheap $8 consumer tier at first.** Support load without moving the number; add later only if
+  the install base demands it.
+
+The sharp move: make **retention the paid axis**. Free keeps a snapshot 30 days; paid keeps it forever.
+That ties the price to the one differentiator (the freeze) rather than to seats alone — charging for
+permanence, which nobody else offers, not for collaboration, which everyone offers.
+
+Monetization loop: free capture → team hits the retention cap or wants the Linear/Slack integration →
+upgrade to seats → more teammates @mentioned → more seats. The same guest loop that grows users seeds
+the buyers.
+
+Number check: ~$15k/mo ≈ 95 teams × 4 seats × $25, fed by ~40–60k installs plus a content/outbound
+funnel for the teams. Reachable, B2B-shaped, slow — the analogs took years, not months.
 
 ---
 
